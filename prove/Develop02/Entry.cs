@@ -12,10 +12,26 @@ public class Entry
 
     }
 
+
+    public Entry NewEntry()
+    {
+        Prompt prompt = new Prompt();
+        Entry entry = new Entry();
+        DateTime theCurrentTime = DateTime.Now;
+        string date = theCurrentTime.ToShortDateString();
+        _date = date;
+        _prompt = prompt.RandomPrompt();
+        Console.WriteLine(_prompt);
+        Console.Write("> ");
+        string response = Console.ReadLine();
+        _userResponse = response;
+        return entry;
+    }
     public void Display()
     {
-
-        Console.WriteLine($"Date: {_date} — Prompt: {_prompt}\n{_userResponse}\n");
+        
+        _entireEntry = $"Date: {_date} — Prompt: {_prompt}\n- {_userResponse}\n";
+        Console.WriteLine(_entireEntry);
     }
 
 }

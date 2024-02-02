@@ -6,12 +6,11 @@ class Program
     {
         //Console.WriteLine("Hello Develop02 World!");
         
-
+        Console.WriteLine("Journal App");
         int menuChoice = 0;
         Journal journal = new Journal();
         while (menuChoice != 5)
         {
-            Console.WriteLine("Journal App");
             Console.WriteLine("Options:");
             Console.WriteLine("1. New Entry");
             Console.WriteLine("2. Display Journal");
@@ -25,8 +24,8 @@ class Program
             switch (menuChoice)
             {
                 case 1:
-                    Prompt prompt = new Prompt();
                     Entry entry = new Entry();
+                    Prompt prompt = new Prompt();
                     DateTime theCurrentTime = DateTime.Now;
                     string date = theCurrentTime.ToShortDateString();
                     entry._date = date;
@@ -41,10 +40,10 @@ class Program
                     journal.Display();
                     break;
                 case 3:
-                    Console.WriteLine("Hi");
+                    journal.Save();
                     break;
                 case 4:
-                    Console.WriteLine("Hi");
+                    //journal.Load();
                     break;
                 case 5:
                     Console.WriteLine("Goodbye...");
