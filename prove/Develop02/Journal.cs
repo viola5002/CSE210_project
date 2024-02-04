@@ -20,9 +20,10 @@ public class Journal
     }
     public void Save()
     {
-         Console.Write("What is the filename? ");
-        _fileName = Console.ReadLine();       
-        using (StreamWriter outputFile = new StreamWriter(_fileName))
+        Console.Write("What is the filename? ");
+        _fileName = Console.ReadLine();
+        Directory.CreateDirectory("Journals");
+        using (StreamWriter outputFile = new StreamWriter($"Journals/{_fileName}"))
         {
             foreach (Entry e in _entries)
             {
@@ -35,9 +36,8 @@ public class Journal
         _entries.Clear();
         Console.Write("What is the filename? ");
         _fileName = Console.ReadLine();
-        string[] _lines = File.ReadAllLines(_fileName);
+        string[] _lines = File.ReadAllLines($"Journals/{_fileName}");
         int i = 0;
-        //List<string> responseParts = new List<string>();
         foreach (string l in _lines)
         {
             if (l.StartsWith("Date: "))
@@ -47,8 +47,6 @@ public class Journal
                 foreach (string m in _newLines)
                 {
                 _newLines = m.Split(" — Prompt: ");
-                //_entries[i]._date = _newLines[0];
-                //_entries[i]._prompt = _newLines[1];
                 }
                 e._date = _newLines[0];
                 e._prompt = _newLines[1];
@@ -61,16 +59,12 @@ public class Journal
             }
             else
             {
-                //string[] _newLines = l.Split("\n",StringSplitOptions.RemoveEmptyEntries);
-                //responseParts.Add(l);
                 _entries[i]._userResponse = l;
             }
-            //string combinedResponse = String.Join(' ', responseParts);
             Console.WriteLine(l);
             i++;
         }
 
-        //return journal;
     }
 
 }
