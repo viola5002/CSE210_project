@@ -43,7 +43,7 @@ class Program
                     journal.Save();
                     break;
                 case 4:
-                    //journal.Load();
+                    journal.Load();
                     break;
                 case 5:
                     Console.WriteLine("Goodbye...");

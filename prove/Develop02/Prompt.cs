@@ -21,12 +21,8 @@ public class Prompt
     {
         EditList();
         Random randomGenerator = new Random();
-        int _promptNumber = randomGenerator.Next(0, 6);
+        int _promptNumber = randomGenerator.Next(6);
         string _prompt = _prompts[_promptNumber];
         return _prompt;
-    }
-    public void Display()
-    {
-        Console.WriteLine(RandomPrompt());
     }
 }
