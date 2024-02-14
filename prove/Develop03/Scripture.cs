@@ -6,12 +6,17 @@ public class Scripture
 
     public Scripture()
     {
-        _entireScripture = "And this is life eternal, that they might know thee the only true God, and Jesus Christ, whom thou hast sent.";
+        _entireScripture = "And this is life eternal, that they might know thee the only true God, and Jesus Christ, whom thou hast sent. extra";
+        _words = _entireScripture.Split(" ");
     }
 
     public void Display()
     {
-        Console.WriteLine(_entireScripture);
+        foreach (string word in _words)
+        {
+            Console.Write($"{word} ");
+        }
+        Console.WriteLine();
     }
     private void ReadScripture()
     {
@@ -20,7 +25,7 @@ public class Scripture
     private bool IsCompletelyHidden()
     {
         
-        bool result = true;
+        bool result = false;
         foreach (string w in _words)
         {
             if (w.StartsWith('_'))
@@ -36,11 +41,31 @@ public class Scripture
         return result;
         
     }
-    public string SelectRandomWord()
+    private int SelectRandomWord()
     {
         Random randomGenerator = new Random();
         int i = randomGenerator.Next(_words.Length);
-        string word = _words[i];
-        return word;
+        int index = i;
+        return i;
     }
+    public void HideWords()
+    {
+        if (IsCompletelyHidden())
+        {
+            Environment.Exit(0);
+        }
+        else
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                int index = SelectRandomWord();
+                Word w = new Word(_words[index]);
+                string _newWord = w.HideWord();
+                _words[index] = _newWord;
+
+            }
+        }
+    }
+
+
 }

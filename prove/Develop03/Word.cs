@@ -10,7 +10,7 @@ public class Word
         _lengthOfWord = _word.Length;
     }
 
-    private bool IsHidden()
+    public bool IsHidden()
     {
         bool result;
         if (_word.StartsWith('_'))
@@ -25,17 +25,19 @@ public class Word
     }
     public string HideWord()
     {
-        string _newWord = "hi";
         if (IsHidden())
         {
-            foreach (char c in _word)
-            {
-                _newWord = _word.Replace(c, '_');
-            }
-            return _newWord;
+            return _word;
         }
         else
         {
+            foreach (char c in _word)
+            {
+                if (c!=',' && c!=';' && c!='.' && c!=':' && c!='!' && c!='?')
+                {
+                    _word = _word.Replace(c, '_');
+                }
+            }
             return _word;
         }
     }
