@@ -10,6 +10,7 @@ class Program
         string choice = "hi";
         ScriptureReference sR = new ScriptureReference();
         Scripture s = new Scripture();
+        Console.Clear();
 
         while (choice != "quit")
         {

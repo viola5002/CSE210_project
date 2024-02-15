@@ -50,20 +50,31 @@ public class Scripture
     }
     public void HideWords()
     {
-        if (IsCompletelyHidden())
+        for (int i = 0; i < 3; i++)
         {
-            Environment.Exit(0);
-        }
-        else
-        {
-            for (int i = 0; i < 3; i++)
+            if (IsCompletelyHidden())
+            {
+                Environment.Exit(0);
+            }
+            else
             {
                 int index = SelectRandomWord();
                 Word w = new Word(_words[index]);
-                string _newWord = w.HideWord();
-                _words[index] = _newWord;
+                if (w.IsHidden() && i > 0)
+                {
+                    i--;
+                }
+                else
+                {
+                    w = new Word(_words[index]);
+                    string _newWord = w.HideWord();
+                    _words[index] = _newWord;
+                }
+            }    
 
-            }
+            //string _newWord = w.HideWord();
+            //_words[index] = _newWord;
+
         }
     }
 
