@@ -3,11 +3,16 @@ public class Scripture
 {
     private string[] _words;
     private string _entireScripture;
+    private List<int> _indexes = new List<int>();
 
-    public Scripture()
+    public Scripture(string scripture)
     {
-        _entireScripture = "And this is life eternal, that they might know thee the only true God, and Jesus Christ, whom thou hast sent. extra";
+        _entireScripture = scripture;
         _words = _entireScripture.Split(" ");
+        for (int i = 0; i < _words.Length; i++)
+        {
+            _indexes.Add(i);
+        }
     }
 
     public void Display()
@@ -17,10 +22,6 @@ public class Scripture
             Console.Write($"{word} ");
         }
         Console.WriteLine();
-    }
-    private void ReadScripture()
-    {
-        _words = _entireScripture.Split(" ");
     }
     private bool IsCompletelyHidden()
     {
@@ -44,38 +45,42 @@ public class Scripture
     private int SelectRandomWord()
     {
         Random randomGenerator = new Random();
-        int i = randomGenerator.Next(_words.Length);
-        int index = i;
-        return i;
+        int i = randomGenerator.Next(_indexes.Count);
+        int index = _indexes[i];
+        _indexes.RemoveAt(i);
+        return index;
     }
-    public void HideWords()
+    public void HideWords(ScriptureReference reference, Scripture scripture)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             if (IsCompletelyHidden())
             {
+                Console.Clear();
+                reference.Display();
+                scripture.Display();
                 Environment.Exit(0);
             }
             else
             {
                 int index = SelectRandomWord();
                 Word w = new Word(_words[index]);
-                if (w.IsHidden() && i > 0)
-                {
-                    i--;
-                }
-                else
+                /*
+                if (_indexes.Count < 4)
                 {
                     w = new Word(_words[index]);
                     string _newWord = w.HideWord();
                     _words[index] = _newWord;
+                    i--;
                 }
+                */
+
+                w = new Word(_words[index]);
+                string _newWord = w.HideWord();
+                _words[index] = _newWord;
             }    
-
-            //string _newWord = w.HideWord();
-            //_words[index] = _newWord;
-
         }
+
     }
 
 

@@ -7,9 +7,11 @@ class Program
     {
         //Console.WriteLine("Hello Develop03 World!");
 
+        Console.Clear();
         string choice = "hi";
-        ScriptureReference sR = new ScriptureReference();
-        Scripture s = new Scripture();
+        ScriptureChoice sC = new ScriptureChoice();
+        ScriptureReference sR = sC.ChooseReference();
+        Scripture s = sC.GetScripture();
         Console.Clear();
 
         while (choice != "quit")
@@ -20,7 +22,7 @@ class Program
             choice = Console.ReadLine();
             if (choice != "quit")
             {
-                s.HideWords();
+                s.HideWords(sR, s);
                 Console.Clear();
             }
             else

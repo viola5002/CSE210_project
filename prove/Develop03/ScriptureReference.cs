@@ -6,12 +6,19 @@ public class ScriptureReference
     private int _verse;
     private int _endVerse;
 
-    public ScriptureReference()
+    public ScriptureReference(string book, int chapter, int verse)
     {
-        _book = "John";
-        _chapter = 17;
-        _verse = 3;
+        _book = book;
+        _chapter = chapter;
+        _verse = verse;
         _endVerse = 0;
+    }
+    public ScriptureReference(string book, int chapter, int verse, int endVerse)
+    {
+        _book = book;
+        _chapter = chapter;
+        _verse = verse;
+        _endVerse = endVerse;
     }
 
     public void Display()
