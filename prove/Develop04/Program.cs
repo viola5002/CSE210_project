@@ -16,7 +16,7 @@ class Program
                 "1. Breathing Activity\n"+
                 "2. Reflecting Activity\n"+
                 "3. Listing Activity\n"+
-                "4. View history\n"+
+                "4. Sensory Counting Activity\n"+
                 "4. Quit");
 
             Console.Write("Select a choice from the menu: ");
@@ -46,10 +46,15 @@ class Program
                         "reflect on good things in your life by having you list as many things as possible.");
                     list.BeginActivity();
                     list.RunActiviity();
-                    list.EndActivity();    
+                    list.EndActivity();
                     break;
 
                 case 4:
+                    SensoryCountingActivity counting = new SensoryCountingActivity("Sensory Counting Activity",
+                        "appreciate your surroundings by guiding you to identify colored things.");
+                    counting.BeginActivity();
+                    counting.RunActiviity();
+                    counting.EndActivity();
                     break;
 
                 case 5:
