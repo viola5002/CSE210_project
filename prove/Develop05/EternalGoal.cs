@@ -6,4 +6,11 @@ public class EternalGoal : Goal
     {
         
     }
+
+    public override int RecordEvent()
+    {
+        _completed = false;
+        return base.RecordEvent();
+    }
+
 }
