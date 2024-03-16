@@ -1,0 +1,3 @@
+300||Wizard Wannabe
+SimpleGoal||finish program||turn it in today||100||True
+EternalGoal||asdfasdfa||werwerqwer||50

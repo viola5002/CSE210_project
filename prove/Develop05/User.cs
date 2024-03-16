@@ -5,49 +5,20 @@ public class User
     private List<Goal> _goals = new List<Goal>();
     private string _fileName;
     private int _score;
+    private string _level;
+    private int _milestone;
+    private List<string> _levels = new List<string>() {"Muggle||99", "Squib||249", "Wizard Wannabe||499",
+        "Wizard-in-Training||999", "Wizard of the Realm||1499", "Master Wizard||2499"};
 
     public User()
     {
-        int choice = 0;
-        do{
-            Console.WriteLine($"\nYou have {_score} points\n");
-            Console.WriteLine("Menu Options:\n"+
-                                "1. Create new Goal\n"+
-                                "2. List Goals\n"+
-                                "3. Save Goals\n"+
-                                "4. Load Goals\n"+
-                                "5. Recored Completion\n"+
-                                "6. Quit");
-            Console.Write("What is your choice? ");
-            choice = int.Parse(Console.ReadLine());
-            switch (choice)
-            {
-                case 1:
-                    CreateGoal();
-                    break;
-                case 2:
-                    ListGoals();
-                    break;
-                case 3:
-                    SaveGoals();
-                    break;
-                case 4:
-                    LoadGoals();
-                    break;
-                case 5:
-                    RecordCompletion();
-                    break;
-                case 6:
-                    Console.WriteLine("Goodbye!");
-                    break;
-                default:
-                    Console.WriteLine("That is not a recognized choice.");
-                    break;
-            }
-        } while (choice != 6);
     }
 
-    private void CreateGoal()
+    public int GetScore()
+    {
+        return _score;
+    }
+    public void CreateGoal()
     {
         Console.WriteLine("\n1. Simple Goal\n"+
                           "2. Eternal Goal\n"+
@@ -73,7 +44,7 @@ public class User
                 break;
         }
     }
-    private void ListGoals()
+    public void ListGoals()
     {
         int i = 1;
         Console.WriteLine();
@@ -83,19 +54,32 @@ public class User
             i++;
         }
     }    
-    private void SaveGoals()
+    public void SaveGoals()
     {
         Console.Write("\nWhat is the file name to save under? ");
         _fileName = Console.ReadLine();
         if (File.Exists(_fileName))
         {
             Console.Write("That file already exists. Do you want to override it? (y/n)");
+        
+            string str = Console.ReadLine();
+            if (str == "y")
+            {
+                using (StreamWriter newFile = new StreamWriter(_fileName))
+                {
+                    newFile.WriteLine($"{_score}||{GetLevel()}");
+                    foreach (Goal goal in _goals)
+                    {
+                        newFile.WriteLine(goal.GetSaveFormat());
+                    }
+                }
+            }
         }
-        string str = Console.ReadLine();
-        if (str == "y")
+        else
         {
             using (StreamWriter newFile = new StreamWriter(_fileName))
             {
+                newFile.WriteLine($"{_score}||{GetLevel()}");
                 foreach (Goal goal in _goals)
                 {
                     newFile.WriteLine(goal.GetSaveFormat());
@@ -103,8 +87,9 @@ public class User
             }
         }
     }
-    private void LoadGoals()
+    public void LoadGoals()
     {
+        Console.WriteLine("This will delete the unsaved goals.");
         Console.Write("What is the filename to load? ");
         _fileName = Console.ReadLine();
         if (File.Exists(_fileName) == false)
@@ -113,6 +98,7 @@ public class User
         }
         else
         {
+            _goals.Clear();
             string[] lines = File.ReadAllLines(_fileName);
             foreach (string line in lines)
             {
@@ -135,11 +121,14 @@ public class User
                     c.GetVariables(newLines);
                     _goals.Add(c);
                 }
+                else
+                {
+                    _score = int.Parse(newLines[0]);
+                }
             }
         }
-        ListGoals();
     }
-    private void RecordCompletion()
+    public string RecordCompletion()
     {
         Console.WriteLine("The goals are:");
         ListGoals();
@@ -148,5 +137,35 @@ public class User
         Goal goal = _goals[choice-1];
         int goalScore = goal.RecordEvent();
         _score += goalScore;
+        return GetLevel();
+    }
+    public string GetLevel()
+    {
+        _milestone = 0;
+        string[] newLevels;
+        foreach (string level in _levels)
+        {
+            newLevels = level.Split("||");
+            if (_score >= int.Parse(newLevels[1]))
+            {
+                _level = newLevels[0];
+                _milestone++;
+            }
+            else
+            {
+                _level = newLevels[0];
+                break;
+            }
+        }
+        return _level;
+    }
+    public void LevelProgress()
+    {
+        string[] maxLevel = _levels[_levels.Count-1].Split("||");
+        int untilMax = int.Parse(maxLevel[1]) - _score + 1;
+        Console.WriteLine($"You have {untilMax} points until you are a {maxLevel[0]}");
+        string[] nextLevel = _levels[_milestone].Split("||");
+        int untilNext = int.Parse(nextLevel[1]) - _score + 1;
+        Console.WriteLine($"You have {untilNext} points until next level");
     }
 }

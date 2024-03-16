@@ -36,7 +36,7 @@ public class ChecklistGoal : Goal
     public override int RecordEvent()
     {
         _timesCompleted++;
-        if (_timesCompleted == _totalTimes)
+        if (_timesCompleted >= _totalTimes)
         {
             _completed = true;
         }

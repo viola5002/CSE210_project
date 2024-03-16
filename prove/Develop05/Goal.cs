@@ -1,6 +1,6 @@
 using System;
 
-public abstract class Goal
+public class Goal
 {
     private string _name;
     private string _description;

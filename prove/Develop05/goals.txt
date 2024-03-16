@@ -1,0 +1,5 @@
+255||Wizard Wannabe
+SimpleGoal||get a stripe||go to jiu jitsu 4 times a week||100||True
+EternalGoal||pray||pray every morning||15
+ChecklistGoal||have no desserts for a month||no sugary stuff||20||1000||30||4
+SimpleGoal||finish work early||get more school done tomorrow||50||False
