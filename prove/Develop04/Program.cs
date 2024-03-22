@@ -17,7 +17,7 @@ class Program
                 "2. Reflecting Activity\n"+
                 "3. Listing Activity\n"+
                 "4. Sensory Counting Activity\n"+
-                "4. Quit");
+                "5. Quit");
 
             Console.Write("Select a choice from the menu: ");
             choice = int.Parse(Console.ReadLine());
@@ -65,6 +65,6 @@ class Program
                     Console.WriteLine("I do not recognize that choice.");
                     break;
             }
-        } while (choice != 4);
+        } while (choice != 5);
     }
 }
