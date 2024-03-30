@@ -7,15 +7,15 @@ public class NoPeekyCard : Card
 
     }
 
-    public override bool PlayCard(string compareCard)
+    public override bool PlayCard(string compareCard, string player)
     {        
         string[] cardParts = compareCard.Split(" ");
         string compareColor = cardParts[0];
         string compareNumber = cardParts[1];
         return false;
     }
-    public override void Display()
+    public override string Display()
     {
-        base.Display();
+        return base.Display();
     }
 }

@@ -17,10 +17,10 @@ public abstract class Card
     {
         return _card;
     }
-    public abstract bool PlayCard(string compareCard);
-    public virtual void Display()
+    public abstract bool PlayCard(string compareCard, string player);
+    public virtual string Display()
     {
-        Console.WriteLine(_card);
+        return $"{_color} {_number}";
     }
     private void ParseCard()
     {

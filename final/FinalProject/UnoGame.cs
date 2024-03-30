@@ -6,7 +6,13 @@ public class UnoGame : Game
 
     public UnoGame(string rules) : base(rules)
     {
+        string[] extraCards = {"color wild", "color wild", "color wild", "color wild",};
+        _deck.AddRange(extraCards);
         DealCards(7);
+        Random random = new Random();
+        int index = random.Next(_deck.Count);
+        _discardPile.Add(_deck[index]);
+        _deck.RemoveAt(index);
     }
 
     public override void Pass(List<string> hand)
@@ -23,7 +29,7 @@ public class UnoGame : Game
         Console.WriteLine($"The top card is {topCard}");
         Console.Write("Pick your card that you want to play: ");
         UnoCard card = new UnoCard(_userHand[int.Parse(Console.ReadLine())-1]);
-        if(card.PlayCard(topCard))
+        if(card.PlayCard(topCard, "user"))
         {
             _discardPile.Add(card.GetCard());
             _userHand.Remove(card.GetCard());
@@ -54,7 +60,7 @@ public class UnoGame : Game
         foreach (string card in opponentHand)
         {
             UnoCard uc = new UnoCard(card);
-            if(uc.PlayCard(topCard))
+            if(uc.PlayCard(topCard, "opponent"))
             {
                 _discardPile.Add(uc.GetCard());
                 opponentHand.Remove(uc.GetCard());

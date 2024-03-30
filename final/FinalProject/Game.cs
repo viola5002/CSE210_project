@@ -54,9 +54,6 @@ public abstract class Game
                 _deck.RemoveAt(index3);
             }
         }
-        int index4 = random.Next(_deck.Count);
-        _discardPile.Add(_deck[index4]);
-        _deck.RemoveAt(index4);
 
 
     }
