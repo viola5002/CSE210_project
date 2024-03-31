@@ -9,7 +9,7 @@ public class NoPeekyGame : Game
 
     public override void DisplayCards()
     {
-        base.DisplayCards();
+        throw new NotImplementedException();
     }
     public override void Pass(List<string> hand)
     {
@@ -20,10 +20,6 @@ public class NoPeekyGame : Game
         throw new NotImplementedException();
     }
     public override void OpponentTurn(List<string> opponentHand)
-    {
-        throw new NotImplementedException();
-    }
-    public override int EndGame()
     {
         throw new NotImplementedException();
     }

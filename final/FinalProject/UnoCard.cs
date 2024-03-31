@@ -18,13 +18,15 @@ public class UnoCard : Card
             {
                 Console.Write("What color are you changing it into? ");
                 _color = Console.ReadLine();
-                //somehow need to edit the card in the game class
+                return true;
+                //change so that the card now says something like "blue wild"
             }
             else if (player == "opponent")
             {
                 string[] colors = {"blue", "red", "yellow", "green"};
                 Random random = new Random();
                 _color = colors[random.Next(colors.Length)];
+                return true;
             }
         }
         if (_number == compareNumber || _color == compareColor)

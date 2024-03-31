@@ -23,10 +23,21 @@ public class UnoGame : Game
         hand.Add(_deck[index]);
         _deck.RemoveAt(index);
     }
+    public override void DisplayCards()
+    {
+        int i = 1;
+        foreach (string card in _userHand)
+        {
+            UnoCard unoCard = new UnoCard(card);
+            Console.WriteLine($"{i}. {unoCard.Display()}");
+            i++;
+        }
+    }
     public override void PlayTurn()
     {
         string topCard = _discardPile[_discardPile.Count-1];
-        Console.WriteLine($"The top card is {topCard}");
+        UnoCard newTopCard = new UnoCard(topCard);
+        Console.WriteLine($"The top card is {newTopCard.Display}");
         Console.Write("Pick your card that you want to play: ");
         UnoCard card = new UnoCard(_userHand[int.Parse(Console.ReadLine())-1]);
         if(card.PlayCard(topCard, "user"))
@@ -77,9 +88,5 @@ public class UnoGame : Game
             Pass(opponentHand);
         }
     }
-    public override int EndGame()
-    {
-        Environment.Exit(0);
-        return base.EndGame();
-    }
+
 }

@@ -2,7 +2,7 @@ using System;
 
 public class GoFishCard : Card
 {
-    GoFishCard(string card) : base(card)
+    public GoFishCard(string card) : base(card)
     {
 
     }
@@ -12,10 +12,13 @@ public class GoFishCard : Card
         string[] cardParts = compareCard.Split(" ");
         string compareColor = cardParts[0];
         string compareNumber = cardParts[1];
-        return false;
-    }
-    public override string Display()
-    {
-        return base.Display();
+        if (_color == compareColor && _number == compareNumber)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -6,7 +6,7 @@ public abstract class Game
 {
     private string _rules;
     private int _opponents;
-    private int _score;
+
     protected List<string> _deck = new List<string>() {"red 0", "red 1", "red 2", "red 3", "red 4", "red 5", "red 6", "red 7", "red 8", "red 9",
             "red 0", "red 1", "red 2", "red 3", "red 4", "red 5", "red 6", "red 7", "red 8", "red 9",
             "yellow 0", "yellow 1", "yellow 2", "yellow 3", "yellow 4", "yellow 5", "yellow 6", "yellow 7", "yellow 8", "yellow 9",
@@ -16,9 +16,9 @@ public abstract class Game
             "green 0", "green 1", "green 2", "green 3", "green 4", "green 5", "green 6", "green 7", "green 8", "green 9",
             "green 0", "green 1", "green 2", "green 3", "green 4", "green 5", "green 6", "green 7", "green 8", "green 9"};
     protected List<string> _userHand = new List<string>();
-    private List<string> _opponentHand = new List<string>();
-    private List<string> _opponentHand1 = new List<string>();
-    private List<string> _opponentHand2 = new List<string>();
+    protected List<string> _opponentHand = new List<string>();
+    protected List<string> _opponentHand1 = new List<string>();
+    protected List<string> _opponentHand2 = new List<string>();
     protected List<string> _discardPile = new List<string>();
 
     public Game(string rules)
@@ -101,20 +101,12 @@ public abstract class Game
             }
         } while (gameChoice != 4);
     }
-    public virtual void DisplayCards()
-    {
-        int i = 1;
-        foreach (string card in _userHand)
-        {
-            Console.WriteLine($"{i}. {card}");
-            i++;
-        }
-    }
+    public abstract void DisplayCards();
     public abstract void Pass(List<string> hand);
     public abstract void PlayTurn();
     public abstract void OpponentTurn(List<string> opponentHand);
-    public virtual int EndGame()
+    public void EndGame()
     {
-        return _score;
+        Environment.Exit(0);
     }
 }
