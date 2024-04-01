@@ -44,10 +44,7 @@ public class GoFishGame : Game
             {
                 if (goFishCard.PlayCard(card, "user"))
                 {
-                    _userMatches.Add(card);
-                    _userMatches.Add(goFishCard.GetCard());
-                    _opponentHand.Remove(card);
-                    _userHand.Remove(goFishCard.GetCard());
+                    MoveCards(_userHand, _userMatches, _opponentHand, goFishCard.GetCard(), card);
                     break;
                 }
             }
@@ -58,10 +55,7 @@ public class GoFishGame : Game
             {
                 if (goFishCard.PlayCard(card, "user"))
                 {
-                    _userMatches.Add(card);
-                    _userMatches.Add(goFishCard.GetCard());
-                    _opponentHand.Remove(card);
-                    _userHand.Remove(goFishCard.GetCard());
+                    MoveCards(_userHand, _userMatches, _opponentHand1, goFishCard.GetCard(), card);
                     break;
                 }
             }            
@@ -72,27 +66,38 @@ public class GoFishGame : Game
             {
                 if (goFishCard.PlayCard(card, "user"))
                 {
-                    _userMatches.Add(card);
-                    _userMatches.Add(goFishCard.GetCard());
-                    _opponentHand.Remove(card);
-                    _userHand.Remove(goFishCard.GetCard());
-                    if (_userMatches.Count == 10)
-                    {
-                        Console.WriteLine("You win!");
-                        EndGame();
-                    }
+                    MoveCards(_userHand, _userMatches, _opponentHand2, goFishCard.GetCard(), card);
                     break;
                 }
             }
         }
+        
         if (numbOfHands == _userHand.Count)
         {
             Console.WriteLine("Your opponent does not have the card. Go Fish!");
             Pass(_userHand);
         }
+        if (_userMatches.Count == 10)
+        {
+            Console.WriteLine("You win!");
+            EndGame();
+        }
     }
     public override void OpponentTurn(List<string> opponentHand)
     {
+        List<string> opponentMatches = new List<string>();
+        if (opponentHand == _opponentHand) 
+        {
+            opponentMatches = _opponentMatches;
+        }
+        else if (opponentHand == _opponentHand1)
+        {
+            opponentMatches = _opponentMatches1;
+        }
+        else if (opponentHand == _opponentHand2)
+        {
+            opponentMatches = _opponentHand2;
+        }
         int numbOfCards = 0;
         Random random = new Random();
         int askCard = random.Next(4);
@@ -103,12 +108,12 @@ public class GoFishGame : Game
             case 0:
                 foreach (string compareCard in _userHand)
                 {
-                    if(goFishCard.PlayCard(card, "opponentToUser"))
+                    if(goFishCard.PlayCard(compareCard, "opponentToUser"))
                     {
                         Console.Write($"Your opponent is asking for {goFishCard.GetCard()} and you have it!"+
                             "Press Enter to give it to them. ");
                         Console.ReadKey();
-                        opponentHand.Add(compareCard);
+                        MoveCards(opponentHand, opponentMatches, _userHand, goFishCard.GetCard(), compareCard);
                         break;  
                     }
                     else
@@ -123,10 +128,16 @@ public class GoFishGame : Game
                     Pass(opponentHand);
                 }
                 break;
+            // if I can't get this to work, only have 1 opponent.
             case 1:
-                if(goFishCard.PlayCard(card, "opponent1"))
+                foreach (string compareCard in _opponentHand)
                 {
-                    Console.WriteLine("Match found!");
+                    if (goFishCard.PlayCard(compareCard, "opponent"))
+                    {
+                        Console.WriteLine("Match found!");   
+                        MoveCards(opponentHand, opponentMatches, _opponentHand, goFishCard.GetCard(), compareCard);
+                        break;                         
+                    }
                 }
                 else
                 {
@@ -134,19 +145,29 @@ public class GoFishGame : Game
                 }
                 break;
             case 2:
-                if(goFishCard.PlayCard(card, "opponent2"))
-                {
-                    Console.WriteLine("Match found!");
-                }
+                    foreach (string compareCard in _opponentHand1)
+                    {
+                        if (goFishCard.PlayCard(compareCard, "opponent"))
+                        {
+                            Console.WriteLine("Match found!");   
+                            MoveCards(opponentHand, opponentMatches, _opponentHand1, goFishCard.GetCard(), compareCard);
+                            break;                         
+                        }
+                    }
                 else
                 {
                     Pass(opponentHand);
                 }
                 break;
             case 3:
-                if(goFishCard.PlayCard(card, "opponent3"))
+                foreach (string compareCard in _opponentHand2)
                 {
-                    Console.WriteLine("Match found!");
+                    if (goFishCard.PlayCard(compareCard, "opponent"))
+                    {
+                        Console.WriteLine("Match found!");   
+                        MoveCards(opponentHand, opponentMatches, _opponentHand2, goFishCard.GetCard(), compareCard);                         
+                        break;
+                    }
                 }
                 else
                 {
@@ -154,10 +175,17 @@ public class GoFishGame : Game
                 }
                 break;
         }
-        if (opponentHand.Count == 10)
+        if (opponentMatches.Count == 10)
         {
             Console.WriteLine("You lose.");
             EndGame();
         }
+    }
+    public void MoveCards(List<string> recieveHand, List<string> recieveMatches, List<string> giveHand, string alreadyHaveCard, string giveCard)
+    {
+        recieveMatches.Add(alreadyHaveCard);
+        recieveMatches.Add(giveCard);
+        giveHand.Remove(alreadyHaveCard);
+        recieveHand.Remove(giveCard);
     }
 }
