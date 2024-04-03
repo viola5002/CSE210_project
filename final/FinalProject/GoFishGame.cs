@@ -127,7 +127,7 @@ public class GoFishGame : Game
         }
         else if (opponentHand == _opponentHand2)
         {
-            opponentMatches = _opponentHand2;
+            opponentMatches = _opponentMatches2;
         }
         int numbOfCards = 0;
         Random random = new Random();
