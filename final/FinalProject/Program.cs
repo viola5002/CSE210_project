@@ -7,6 +7,7 @@ class Program
     {
         //Console.WriteLine("Hello FinalProject World!");
         int choice = 0;
+        string rules;
         do {
                 Console.WriteLine("1. Uno\n"+
                                   "2. Go Fish\n"+
@@ -21,7 +22,11 @@ class Program
                         uno.PlayGame();
                         break;
                     case 2:
-                        GoFishGame goFish = new GoFishGame("haha");
+                        rules = @"You must ask an opponent (or yourself) for a card. If they have the same card, 
+                            they will give it to you to put in your matches. If they don't have it, you will 
+                            draw a card. When either you or your opponent has 5 matches, the game is over 
+                            and whomever has 5 matches wins";
+                        GoFishGame goFish = new GoFishGame(rules);
                         goFish.PlayGame();
                         break;
                     case 3:

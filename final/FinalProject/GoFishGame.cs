@@ -1,4 +1,5 @@
 using System;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 
 public class GoFishGame : Game
@@ -33,11 +34,28 @@ public class GoFishGame : Game
     }
     public override void PlayTurn()
     {
-        Console.Write("Which opponent are you asking? (Enter a number) ");
+        Console.Write("Which opponent are you asking? (Enter 0 for yourself, 1 for opponent 1, etc.) ");
         int opponent = int.Parse(Console.ReadLine());
-        Console.Write("What card are you asking for? (Enter a number)");
-        GoFishCard goFishCard = new GoFishCard(_userHand[int.Parse(Console.ReadLine())-1]);
-        int numbOfHands = _userHand.Count;
+        Console.Write("What card are you asking for? (Enter a number) ");
+        int index = int.Parse(Console.ReadLine())-1;
+        GoFishCard goFishCard = new GoFishCard(_userHand[index]);
+        int numbOfCards = 0;
+        if (opponent == 0)
+        {
+            foreach (string card in _userHand)
+            {
+                if (goFishCard.PlayCard(card, "user") && index != _userHand.FindLastIndex(a => a.Contains(card)))
+                {
+                    MoveCards(_userHand, _userMatches, _userHand, goFishCard.GetCard(), card);
+                    Console.WriteLine("Match found!");
+                    break;
+                }
+                else
+                {
+                    numbOfCards++;
+                }
+            }
+        }
         if (opponent == 1)
         {
             foreach (string card in _opponentHand)
@@ -46,6 +64,10 @@ public class GoFishGame : Game
                 {
                     MoveCards(_userHand, _userMatches, _opponentHand, goFishCard.GetCard(), card);
                     break;
+                }
+                else
+                {
+                    numbOfCards++;
                 }
             }
         }
@@ -58,6 +80,10 @@ public class GoFishGame : Game
                     MoveCards(_userHand, _userMatches, _opponentHand1, goFishCard.GetCard(), card);
                     break;
                 }
+                else
+                {
+                    numbOfCards++;
+                }
             }            
         }
         else if (opponent == 3)
@@ -69,10 +95,14 @@ public class GoFishGame : Game
                     MoveCards(_userHand, _userMatches, _opponentHand2, goFishCard.GetCard(), card);
                     break;
                 }
+                else
+                {
+                    numbOfCards++;
+                }
             }
         }
         
-        if (numbOfHands == _userHand.Count)
+        if (numbOfCards == _userHand.Count)
         {
             Console.WriteLine("Your opponent does not have the card. Go Fish!");
             Pass(_userHand);
@@ -86,6 +116,7 @@ public class GoFishGame : Game
     public override void OpponentTurn(List<string> opponentHand)
     {
         List<string> opponentMatches = new List<string>();
+        int maxRandomNumb= GetOpponents();
         if (opponentHand == _opponentHand) 
         {
             opponentMatches = _opponentMatches;
@@ -100,8 +131,9 @@ public class GoFishGame : Game
         }
         int numbOfCards = 0;
         Random random = new Random();
-        int askCard = random.Next(4);
-        string card = opponentHand[random.Next(opponentHand.Count)];
+        int askCard = random.Next(maxRandomNumb);
+        int index = random.Next(opponentHand.Count);
+        string card = opponentHand[index];
         GoFishCard goFishCard = new GoFishCard(card);
         switch (askCard)
         {
@@ -123,57 +155,59 @@ public class GoFishGame : Game
                 }
                 if (numbOfCards == _userHand.Count)
                 {
-                    Console.WriteLine($"Your opponent is asking for {goFishCard.GetCard()}"+
+                    Console.WriteLine($"Your opponent is asking for {goFishCard.GetCard()} "+
                         "and you don't have it.");
-                    Pass(opponentHand);
                 }
                 break;
-            // if I can't get this to work, only have 1 opponent.
             case 1:
                 foreach (string compareCard in _opponentHand)
                 {
-                    if (goFishCard.PlayCard(compareCard, "opponent"))
+                    if (goFishCard.PlayCard(compareCard, "opponent") && index != opponentHand.FindLastIndex(a => a.Contains(compareCard)))
                     {
                         Console.WriteLine("Match found!");   
                         MoveCards(opponentHand, opponentMatches, _opponentHand, goFishCard.GetCard(), compareCard);
                         break;                         
                     }
-                }
-                else
-                {
-                    Pass(opponentHand);
+                    else
+                    {
+                        numbOfCards++;
+                    }
                 }
                 break;
             case 2:
-                    foreach (string compareCard in _opponentHand1)
-                    {
-                        if (goFishCard.PlayCard(compareCard, "opponent"))
-                        {
-                            Console.WriteLine("Match found!");   
-                            MoveCards(opponentHand, opponentMatches, _opponentHand1, goFishCard.GetCard(), compareCard);
-                            break;                         
-                        }
-                    }
-                else
+                foreach (string compareCard in _opponentHand1)
                 {
-                    Pass(opponentHand);
+                    if (goFishCard.PlayCard(compareCard, "opponent") && index != opponentHand.FindLastIndex(a => a.Contains(compareCard)))
+                    {
+                        Console.WriteLine("Match found!");   
+                        MoveCards(opponentHand, opponentMatches, _opponentHand1, goFishCard.GetCard(), compareCard);
+                        break;                         
+                    }
+                    else
+                    {
+                        numbOfCards++;
+                    }
                 }
                 break;
             case 3:
                 foreach (string compareCard in _opponentHand2)
                 {
-                    if (goFishCard.PlayCard(compareCard, "opponent"))
+                    if (goFishCard.PlayCard(compareCard, "opponent") && index != opponentHand.FindLastIndex(a => a.Contains(compareCard)))
                     {
                         Console.WriteLine("Match found!");   
                         MoveCards(opponentHand, opponentMatches, _opponentHand2, goFishCard.GetCard(), compareCard);                         
                         break;
                     }
-                }
-                else
-                {
-                    Pass(opponentHand);
+                    else
+                    {
+                        numbOfCards++;
+                    }
                 }
                 break;
+        }
+        if (numbOfCards == opponentHand.Count)
+        {
+            Pass(opponentHand);
         }
         if (opponentMatches.Count == 10)
         {

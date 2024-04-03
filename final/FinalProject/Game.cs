@@ -28,6 +28,10 @@ public abstract class Game
         _opponents = int.Parse(Console.ReadLine());
     }
 
+    protected int GetOpponents()
+    {
+        return _opponents;
+    }
     public virtual void DealCards(int _perHand)
     {
         Random random = new Random();
@@ -62,7 +66,7 @@ public abstract class Game
         int gameChoice = 0;
         Console.Clear();
         do {
-            Console.WriteLine("1. Display Rules\n"+
+            Console.WriteLine("1. Display Directions\n"+
                               "2. Display Cards\n"+
                               "3. PlayTurn\n"+
                               "4. Forfeit");
