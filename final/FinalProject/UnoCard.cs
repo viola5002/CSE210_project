@@ -40,8 +40,4 @@ public class UnoCard : Card
             return false;
         }
     }
-    public override string Display()
-    {
-        return base.Display();
-    }
 }

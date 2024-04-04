@@ -14,8 +14,4 @@ public class NoPeekyCard : Card
         string compareNumber = cardParts[1];
         return false;
     }
-    public override string Display()
-    {
-        return base.Display();
-    }
 }
