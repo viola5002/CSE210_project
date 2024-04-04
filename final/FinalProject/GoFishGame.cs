@@ -20,7 +20,7 @@ public class GoFishGame : Game
         foreach (string card in _userHand)
         {
             GoFishCard goFishCard = new GoFishCard(card);
-            Console.WriteLine($"{i}. {goFishCard.Display()}");
+            Console.WriteLine($"{i}. {goFishCard.GetCard()}");
             i++;
         }
         Console.WriteLine($"You have {_userMatches.Count/2} matches.");
@@ -29,7 +29,7 @@ public class GoFishGame : Game
     {
         Console.Write("Which opponent are you asking? (Enter 0 for yourself, 1 for opponent 1, etc.) ");
         int opponent = int.Parse(Console.ReadLine());
-        Console.Write("What card are you asking for? (Enter the first number of the appearance of the card) ");
+        Console.Write("What card are you asking for? (Enter the number of the first appearance of the card) ");
         int index = int.Parse(Console.ReadLine())-1;
         GoFishCard goFishCard = new GoFishCard(_userHand[index]);
         int numbOfCards = _userHand.Count;
@@ -111,18 +111,19 @@ public class GoFishGame : Game
         }
         int numbOfCards = opponentHand.Count;
         Random random = new Random();
-        int askCard = random.Next(maxRandomNumb);
+        int askPlayer = random.Next(maxRandomNumb);
         int index = random.Next(opponentHand.Count);
         string card = opponentHand[index];
         GoFishCard goFishCard = new GoFishCard(card);
-        switch (askCard)
+        Console.WriteLine($"Asking for {goFishCard.GetCard()}...");
+        switch (askPlayer)
         {
             case 0:
                 foreach (string compareCard in _userHand)
                 {
                     if(goFishCard.PlayCard(compareCard, "opponentToUser"))
                     {
-                        Console.Write($"Your opponent is asking for {goFishCard.GetCard()} and you have it! "+
+                        Console.Write($"Your opponent is asking you for {goFishCard.GetCard()} and you have it! "+
                             "Press Enter to give it to them. ");
                         Console.ReadLine();
                         MoveCards(opponentHand, opponentMatches, _userHand, goFishCard.GetCard(), compareCard);
@@ -131,7 +132,7 @@ public class GoFishGame : Game
                 }
                 if (numbOfCards == opponentHand.Count)
                 {
-                    Console.WriteLine($"Your opponent is asking for {goFishCard.GetCard()} "+
+                    Console.WriteLine($"Your opponent is asking you for {goFishCard.GetCard()} "+
                         "and you don't have it.");
                 }
                 break;

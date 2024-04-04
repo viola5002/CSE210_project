@@ -23,7 +23,7 @@ public class UnoGame : Game
         foreach (string card in _userHand)
         {
             UnoCard unoCard = new UnoCard(card);
-            Console.WriteLine($"{i}. {unoCard.Display()}");
+            Console.WriteLine($"{i}. {unoCard.GetCard()}");
             i++;
         }
     }
@@ -31,7 +31,7 @@ public class UnoGame : Game
     {
         string topCard = _discardPile[_discardPile.Count-1];
         UnoCard newTopCard = new UnoCard(topCard);
-        Console.WriteLine($"The top card is {newTopCard.Display()}");
+        Console.WriteLine($"The top card is {newTopCard.GetCard()}");
         Console.Write("Pick your card that you want to play (Enter a number): ");
         int index = int.Parse(Console.ReadLine())-1;
         UnoCard card = new UnoCard(_userHand[index]);
@@ -39,7 +39,7 @@ public class UnoGame : Game
         {
             _discardPile.Add(card.GetCard());
             _userHand.RemoveAt(index);
-            Console.WriteLine($"Playing {card.Display()}...");
+            Console.WriteLine($"Playing {card.GetCard()}...");
             if (card.GetCard().Contains("draw2"))
             {
                 Pass(_opponentHand);
@@ -89,7 +89,7 @@ public class UnoGame : Game
             {
                 _discardPile.Add(uc.GetCard());
                 opponentHand.Remove(card);
-                Console.WriteLine($"Playing {uc.Display()}...");
+                Console.WriteLine($"Playing {uc.GetCard()}...");
                 if (uc.GetCard().Contains("draw2"))
                 {
                     Pass(nextPlayer);

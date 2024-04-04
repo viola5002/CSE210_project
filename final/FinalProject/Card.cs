@@ -18,10 +18,6 @@ public abstract class Card
         return _card;
     }
     public abstract bool PlayCard(string compareCard, string player);
-    public virtual string Display()
-    {
-        return $"{_color} {_number}";
-    }
     private void ParseCard()
     {
         string[] parts = _card.Split(" ");

@@ -67,7 +67,7 @@ public abstract class Game
         do {
             Console.WriteLine("1. Display Directions\n"+
                               "2. Display Cards\n"+
-                              "3. PlayTurn\n"+
+                              "3. Play Turn\n"+
                               "4. Forfeit");
             Console.Write("What is your choice? ");
             gameChoice = int.Parse(Console.ReadLine());
