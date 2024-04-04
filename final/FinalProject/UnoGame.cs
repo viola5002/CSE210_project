@@ -17,14 +17,6 @@ public class UnoGame : Game
         _deck.RemoveAt(index);
     }
 
-    public override void Pass(List<string> hand)
-    {
-        Console.WriteLine("Drawing card...");
-        Random random = new Random();
-        int index = random.Next(_deck.Count);
-        hand.Add(_deck[index]);
-        _deck.RemoveAt(index);
-    }
     public override void DisplayCards()
     {
         int i = 1;

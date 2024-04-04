@@ -64,7 +64,6 @@ public abstract class Game
     public virtual void PlayGame()
     {
         int gameChoice = 0;
-        Console.Clear();
         do {
             Console.WriteLine("1. Display Directions\n"+
                               "2. Display Cards\n"+
@@ -106,7 +105,14 @@ public abstract class Game
         } while (gameChoice != 4);
     }
     public abstract void DisplayCards();
-    public abstract void Pass(List<string> hand);
+    public void Pass(List<string> hand)
+    {
+        Console.WriteLine("Drawing card...");
+        Random random = new Random();
+        int index = random.Next(_deck.Count);
+        hand.Add(_deck[index]);
+        _deck.RemoveAt(index);
+    }
     public abstract void PlayTurn();
     public abstract void OpponentTurn(List<string> opponentHand);
     public void EndGame()

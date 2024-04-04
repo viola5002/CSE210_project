@@ -25,14 +25,6 @@ public class GoFishGame : Game
         }
         Console.WriteLine($"You have {_userMatches.Count/2} matches.");
     }
-    public override void Pass(List<string> hand)
-    {
-        Console.WriteLine("Drawing card...");
-        Random random = new Random();
-        int index = random.Next(_deck.Count);
-        hand.Add(_deck[index]);
-        _deck.RemoveAt(index);
-    }
     public override void PlayTurn()
     {
         Console.Write("Which opponent are you asking? (Enter 0 for yourself, 1 for opponent 1, etc.) ");

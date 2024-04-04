@@ -2,7 +2,7 @@ using System;
 
 public class NoPeekyCard : Card
 {
-    NoPeekyCard(string card) : base(card)
+    public NoPeekyCard(string card) : base(card)
     {
 
     }
