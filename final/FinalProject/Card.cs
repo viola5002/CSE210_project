@@ -4,7 +4,7 @@ using System.Drawing;
 
 public abstract class Card
 {
-    private string _card;
+    protected string _card;
     protected string _color;
     protected string _number;
 

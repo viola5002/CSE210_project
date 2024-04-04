@@ -18,6 +18,7 @@ public class UnoCard : Card
             {
                 Console.Write("What color are you changing it into? ");
                 _color = Console.ReadLine();
+                _card = $"{_color} {_number}";
                 return true;
                 //change so that the card now says something like "blue wild"
             }
@@ -26,6 +27,7 @@ public class UnoCard : Card
                 string[] colors = {"blue", "red", "yellow", "green"};
                 Random random = new Random();
                 _color = colors[random.Next(colors.Length)];
+                _card = $"{_color} {_number}";
                 return true;
             }
         }
