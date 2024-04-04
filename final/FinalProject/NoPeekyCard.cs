@@ -8,10 +8,7 @@ public class NoPeekyCard : Card
     }
 
     public override bool PlayCard(string compareCard, string player)
-    {        
-        /*string[] cardParts = compareCard.Split(" ");
-        string compareColor = cardParts[0];
-        string compareNumber = cardParts[1];*/
+    {
         _card = compareCard;
         return true;
     }

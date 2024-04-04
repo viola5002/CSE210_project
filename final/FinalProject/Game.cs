@@ -115,7 +115,7 @@ public abstract class Game
     }
     public abstract void PlayTurn();
     public abstract void OpponentTurn(List<string> opponentHand);
-    public void EndGame()
+    public virtual void EndGame()
     {
         Environment.Exit(0);
     }
