@@ -187,4 +187,18 @@ public class GoFishGame : Game
         giveHand.Remove(alreadyHaveCard);
         recieveHand.Remove(giveCard);
     }
+    public override void EndGame()
+    {
+        Console.WriteLine($"You have {_userMatches.Count/2} matches.");
+        Console.WriteLine($"Opponent 1 has {_opponentMatches.Count/2} matches.");
+        if (GetOpponents() >= 2)
+        {
+            Console.WriteLine($"Opponent 2 has {_opponentMatches2.Count/2} matches.");
+        }
+        if (GetOpponents() == 3)
+        {
+            Console.WriteLine($"Opponent 3 has {_opponentMatches2.Count/2} matches.");
+        }
+        base.EndGame();
+    }
 }

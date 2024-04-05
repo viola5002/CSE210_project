@@ -6,9 +6,9 @@ using System.Xml.Schema;
 public class NoPeekyGame : Game
 {
     private int _userScore;
-    private int _opponentScore;
-    private int _opponentScore1;
-    private int _opponentScore2;
+    private int _opponentScore = 1000;
+    private int _opponentScore1 = 1000;
+    private int _opponentScore2 = 1000;
     private int _turnCycles;
     public NoPeekyGame(string rules) : base(rules)
     {
@@ -136,11 +136,21 @@ public class NoPeekyGame : Game
     }
     public override void EndGame()
     {
-        int opponents = GetOpponents();
         _userScore = GetScore(_userHand);
         _opponentScore = GetScore(_opponentHand);
-        _opponentScore1 = GetScore(_opponentHand1);
-        _opponentScore2 = GetScore(_opponentHand2);
+        Console.WriteLine($"Your score is {_userScore}.");
+        Console.WriteLine($"Opponent 1's score is {_opponentScore}.");
+        if (GetOpponents() >= 2)
+        {
+            _opponentScore1 = GetScore(_opponentHand1);
+            Console.WriteLine($"Opponent 2's score is {_opponentScore1}.");
+        }
+        if (GetOpponents() == 3)
+        {
+            _opponentScore2 = GetScore(_opponentHand2);
+            Console.WriteLine($"Opponent 3's score is {_opponentScore2}.");
+        }
+
         if (_userScore <= _opponentScore && _userScore <= _opponentScore1 && _userScore <= _opponentScore2)
         {
             Console.WriteLine("You won!");
@@ -160,8 +170,8 @@ public class NoPeekyGame : Game
         }
         foreach (string card in hand)
         {
-            string[] cardParts = card.Split(" ");
-            int number = int.Parse(cardParts[1]);
+            NoPeekyCard noPeekyCard = new NoPeekyCard(card);
+            int number = noPeekyCard.GetNumber();
             total += number;
         }
         return total;
