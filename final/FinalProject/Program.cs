@@ -18,7 +18,7 @@ class Program
                 switch (choice)
                 {
                     case 1:
-                        rules = "You must play a card that matches the color, number, or symbol. "+
+                        rules = "You must play a card that matches the color, number, or symbol of the top discard card. "+
                             "If you don't have one, you will draw a card. Wild cards may be changed to "+
                             "any of the four colors. A draw2 card will make the next player draw two cards. They will "+
                             "still have their turn. There are no skips or reverses. The game ends when someone runs "+
@@ -35,7 +35,12 @@ class Program
                         goFish.PlayGame();
                         break;
                     case 3:
-                        NoPeekyGame noPeeky = new NoPeekyGame("haha");
+                        rules = "You have four hidden cards. You are allowed to know the outside cards "+
+                            "once at the beggining if the game. At each turn, you may either take the top discard card "+
+                            "or draw from the draw pile. You may then replace any of your cards with the card you drew or "+
+                            "discard it. When you think you have the lowest numbers, you declare \"No Peeky\" to end the game. "+
+                            "Whomever has the lowest score wins.";
+                        NoPeekyGame noPeeky = new NoPeekyGame(rules);
                         noPeeky.PlayGame();
                         break;
                     case 4:
