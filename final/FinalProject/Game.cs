@@ -65,6 +65,7 @@ public abstract class Game
     {
         int gameChoice = 0;
         do {
+            Console.WriteLine();
             Console.WriteLine("1. Display Directions\n"+
                               "2. Display Cards\n"+
                               "3. Play Turn\n"+

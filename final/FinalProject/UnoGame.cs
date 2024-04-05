@@ -50,7 +50,7 @@ public class UnoGame : Game
         {
             Console.Write("That card can't be played right now. Do you want to draw a card? (y/n)");
             string choice = Console.ReadLine();
-            if (choice == "n")
+            if (choice.Contains('n'))
             {
                 PlayTurn();
             }
@@ -58,6 +58,10 @@ public class UnoGame : Game
             {
                 Pass(_userHand);
             }
+        }
+        if (_userHand.Count == 1)
+        {
+            Console.WriteLine("Uno!");
         }
         if (_userHand.Count == 0)
         {
@@ -70,11 +74,25 @@ public class UnoGame : Game
         List<string> nextPlayer = new List<string>();
         if (opponentHand == _opponentHand)
         {
-            nextPlayer = _opponentHand1;
+            if (GetOpponents() >= 2)
+            {
+                nextPlayer = _opponentHand1;
+            }
+            else
+            {
+                nextPlayer = _userHand;
+            }
         }
         else if (opponentHand == _opponentHand1)
         {
-            nextPlayer = _opponentHand2;
+            if (GetOpponents() == 3)
+            {
+                nextPlayer = _opponentHand2;
+            }
+            else
+            {
+                nextPlayer = _userHand;
+            }
         }
         else if (opponentHand == _opponentHand2)
         {
@@ -107,6 +125,24 @@ public class UnoGame : Game
         {
             Pass(opponentHand);
         }
+        if (opponentHand.Count == 1)
+        {
+            Console.WriteLine("Uno!");
+        }
+    }
+    public override void EndGame()
+    {
+        Console.WriteLine($"You have {_userHand.Count} cards left.");
+        Console.WriteLine($"Opponent 1 has {_opponentHand.Count} cards left.");
+        if (GetOpponents() >= 2)
+        {
+            Console.WriteLine($"Opponent 2 has {_opponentHand1.Count} cards left.");
+        }
+        if (GetOpponents() == 3)
+        {
+            Console.WriteLine($"Opponent 3 has {_opponentHand2.Count} cards left.");
+        }
+        base.EndGame();
     }
 
 }
